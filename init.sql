@@ -1,0 +1,2 @@
+CREATE DATABASE vend;
+CREATE DATABASE vend_test; 

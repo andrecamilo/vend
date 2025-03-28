@@ -1,0 +1,29 @@
+# Binários
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Arquivos de teste
+*.test
+*.out
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.*.local
+
+# Diretórios de dependências
+/vendor/
+/node_modules/
+
+# Arquivos de IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db 
