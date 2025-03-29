@@ -1,4 +1,85 @@
 basePath: /api/v1
+definitions:
+  domain.Contexto:
+    properties:
+      data_fim:
+        type: string
+      data_inicio:
+        type: string
+      descricao:
+        type: string
+      id:
+        type: integer
+      nome:
+        type: string
+      pessoas:
+        items:
+          $ref: '#/definitions/domain.Pessoa'
+        type: array
+      prompts:
+        items:
+          $ref: '#/definitions/domain.Prompt'
+        type: array
+    required:
+    - nome
+    type: object
+  domain.Pessoa:
+    properties:
+      contextos:
+        items:
+          $ref: '#/definitions/domain.Contexto'
+        type: array
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      nome:
+        type: string
+      telefones:
+        items:
+          $ref: '#/definitions/domain.Telefone'
+        type: array
+      updated_at:
+        type: string
+    required:
+    - email
+    - nome
+    type: object
+  domain.Prompt:
+    properties:
+      conteudo:
+        type: string
+      contexto:
+        $ref: '#/definitions/domain.Contexto'
+      contexto_id:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      updated_at:
+        type: string
+    required:
+    - conteudo
+    type: object
+  domain.Telefone:
+    properties:
+      id:
+        type: integer
+      numero:
+        type: string
+      pessoa:
+        $ref: '#/definitions/domain.Pessoa'
+      pessoa_id:
+        type: integer
+      tipo:
+        type: string
+    required:
+    - numero
+    - tipo
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -13,7 +94,579 @@ info:
   termsOfService: http://swagger.io/terms/
   title: Vend API
   version: "1.0"
-paths: {}
+paths:
+  /contextos:
+    get:
+      consumes:
+      - application/json
+      description: Retorna a lista de todos os contextos cadastrados
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Contexto'
+            type: array
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Listar contextos
+      tags:
+      - contextos
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo contexto no sistema
+      parameters:
+      - description: Dados do contexto
+        in: body
+        name: contexto
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Contexto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Contexto'
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Criar contexto
+      tags:
+      - contextos
+  /contextos/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove um contexto do sistema
+      parameters:
+      - description: ID do contexto
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Deletar contexto
+      tags:
+      - contextos
+    get:
+      consumes:
+      - application/json
+      description: Retorna os dados de um contexto específico
+      parameters:
+      - description: ID do contexto
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Contexto'
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Buscar contexto
+      tags:
+      - contextos
+    put:
+      consumes:
+      - application/json
+      description: Atualiza os dados de um contexto específico
+      parameters:
+      - description: ID do contexto
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Dados do contexto
+        in: body
+        name: contexto
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Contexto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Contexto'
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Atualizar contexto
+      tags:
+      - contextos
+  /pessoas:
+    get:
+      consumes:
+      - application/json
+      description: Retorna a lista de todas as pessoas cadastradas
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Pessoa'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Listar pessoas
+      tags:
+      - pessoas
+    post:
+      consumes:
+      - application/json
+      description: Cria uma nova pessoa no sistema
+      parameters:
+      - description: Dados da pessoa
+        in: body
+        name: pessoa
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Pessoa'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Pessoa'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Criar pessoa
+      tags:
+      - pessoas
+  /pessoas/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove uma pessoa do sistema
+      parameters:
+      - description: ID da pessoa
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Deletar pessoa
+      tags:
+      - pessoas
+    get:
+      consumes:
+      - application/json
+      description: Retorna os dados de uma pessoa específica
+      parameters:
+      - description: ID da pessoa
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Pessoa'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Buscar pessoa
+      tags:
+      - pessoas
+    put:
+      consumes:
+      - application/json
+      description: Atualiza os dados de uma pessoa específica
+      parameters:
+      - description: ID da pessoa
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Dados da pessoa
+        in: body
+        name: pessoa
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Pessoa'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Pessoa'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Atualizar pessoa
+      tags:
+      - pessoas
+  /prompts:
+    get:
+      consumes:
+      - application/json
+      description: Retorna a lista de todos os prompts cadastrados
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Prompt'
+            type: array
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Listar prompts
+      tags:
+      - prompts
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo prompt no sistema
+      parameters:
+      - description: Dados do prompt
+        in: body
+        name: prompt
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Prompt'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Prompt'
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Criar prompt
+      tags:
+      - prompts
+  /prompts/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove um prompt do sistema
+      parameters:
+      - description: ID do prompt
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Deletar prompt
+      tags:
+      - prompts
+    get:
+      consumes:
+      - application/json
+      description: Retorna os dados de um prompt específico
+      parameters:
+      - description: ID do prompt
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Prompt'
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Buscar prompt
+      tags:
+      - prompts
+    put:
+      consumes:
+      - application/json
+      description: Atualiza os dados de um prompt específico
+      parameters:
+      - description: ID do prompt
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Dados do prompt
+        in: body
+        name: prompt
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Prompt'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Prompt'
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Atualizar prompt
+      tags:
+      - prompts
+  /telefones:
+    get:
+      consumes:
+      - application/json
+      description: Retorna a lista de todos os telefones cadastrados
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Telefone'
+            type: array
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Listar telefones
+      tags:
+      - telefones
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo telefone no sistema
+      parameters:
+      - description: Dados do telefone
+        in: body
+        name: telefone
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Telefone'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Telefone'
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Criar telefone
+      tags:
+      - telefones
+  /telefones/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove um telefone do sistema
+      parameters:
+      - description: ID do telefone
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Deletar telefone
+      tags:
+      - telefones
+    get:
+      consumes:
+      - application/json
+      description: Retorna os dados de um telefone específico
+      parameters:
+      - description: ID do telefone
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Telefone'
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Buscar telefone
+      tags:
+      - telefones
+    put:
+      consumes:
+      - application/json
+      description: Atualiza os dados de um telefone específico
+      parameters:
+      - description: ID do telefone
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Dados do telefone
+        in: body
+        name: telefone
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Telefone'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Telefone'
+        "501":
+          description: Not Implemented
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Atualizar telefone
+      tags:
+      - telefones
 securityDefinitions:
   BearerAuth:
     in: header

@@ -5,19 +5,18 @@ import (
 	"log"
 	"os"
 
-	_ "vend/docs"
+	"vend/docs"
 	"vend/internal/delivery/http"
 	"vend/internal/domain"
 	"vend/internal/infrastructure/chatgpt"
 	postgresRepo "vend/internal/infrastructure/postgres"
-	"vend/internal/service"
 	"vend/internal/usecase"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"github.com/swaggo/files"
-	"github.com/swaggo/gin-swagger"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -80,9 +79,6 @@ func main() {
 
 	// Inicializar serviço ChatGPT (será usado posteriormente)
 	_ = chatgpt.NewService(viper.GetString("OPENAI_API_KEY"))
-
-	// Inicialização do serviço
-	pessoaService := service.NewPessoaService(repo)
 
 	// Inicialização do handler
 	handler := http.NewHandler(pessoaUseCase)

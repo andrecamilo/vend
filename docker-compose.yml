@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:13-alpine
+    image: postgres:latest
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_DB: vend
     ports:
       - "5432:5432"
     volumes:
@@ -18,18 +18,15 @@ services:
       timeout: 5s
       retries: 5
 
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
+  pgadmin:
+    image: dpage/pgadmin4
     environment:
-      - DATABASE_URL=host=postgres user=postgres password=postgres dbname=vend port=5432 sslmode=disable
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres 
 
-volumes:
+volumes: 
   postgres_data: 

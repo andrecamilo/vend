@@ -153,3 +153,24 @@ kubectl apply -f deployments/kubernetes/
 ## Licença
 
 Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes. 
+
+
+
+
+ 
+
+
+
+docker stop portainer && docker rm portainer
+docker volume rm portainer_data
+docker-compose down -v
+
+echo -n "admin" | sha256sum
+8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+
+admin
+adminadmin123
+
+http://localhost:8080/swagger/index.html
