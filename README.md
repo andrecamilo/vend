@@ -174,3 +174,8 @@ admin
 adminadmin123
 
 http://localhost:8080/swagger/index.html
+
+
+go clean
+go mod tidy
+go build 

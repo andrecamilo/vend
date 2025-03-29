@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "API para gerenciamento de pessoas, telefones e contextos com integração ChatGPT",
+        "description": "API para gerenciamento de vendas com integração ChatGPT",
         "title": "Vend API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
@@ -325,7 +325,7 @@
                 "summary": "Buscar pessoa",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "ID da pessoa",
                         "name": "id",
                         "in": "path",
@@ -373,7 +373,7 @@
                 "summary": "Atualizar pessoa",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "ID da pessoa",
                         "name": "id",
                         "in": "path",
@@ -430,7 +430,7 @@
                 "summary": "Deletar pessoa",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "ID da pessoa",
                         "name": "id",
                         "in": "path",
@@ -900,7 +900,7 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "nome": {
                     "type": "string"
@@ -939,7 +939,7 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "nome": {
                     "type": "string"
@@ -964,17 +964,14 @@
                 "conteudo": {
                     "type": "string"
                 },
-                "contexto": {
-                    "$ref": "#/definitions/domain.Contexto"
-                },
                 "contexto_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "created_at": {
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "updated_at": {
                     "type": "string"
@@ -989,16 +986,13 @@
             ],
             "properties": {
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "numero": {
                     "type": "string"
                 },
-                "pessoa": {
-                    "$ref": "#/definitions/domain.Pessoa"
-                },
                 "pessoa_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "tipo": {
                     "type": "string"

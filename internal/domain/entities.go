@@ -2,43 +2,43 @@ package domain
 
 import (
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type Pessoa struct {
-	ID        uint       `json:"id" gorm:"primaryKey"`
-	Nome      string     `json:"nome" validate:"required"`
-	Email     string     `json:"email" validate:"required,email"`
-	Telefones []Telefone `json:"telefones" gorm:"foreignKey:PessoaID"`
-	Contextos []Contexto `json:"contextos" gorm:"many2many:pessoa_contextos;"`
-	CreatedAt time.Time  `json:"created_at"`
-	UpdatedAt time.Time  `json:"updated_at"`
+	ID        primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Nome      string             `bson:"nome" json:"nome" binding:"required"`
+	Email     string             `bson:"email" json:"email" binding:"required"`
+	Telefones []Telefone         `bson:"telefones,omitempty" json:"telefones,omitempty"`
+	Contextos []Contexto         `bson:"contextos,omitempty" json:"contextos,omitempty"`
+	CreatedAt time.Time          `bson:"created_at" json:"created_at"`
+	UpdatedAt time.Time          `bson:"updated_at" json:"updated_at"`
 }
 
 type Telefone struct {
-	ID       uint   `json:"id" gorm:"primaryKey"`
-	Numero   string `json:"numero" validate:"required"`
-	Tipo     string `json:"tipo" validate:"required"`
-	PessoaID uint   `json:"pessoa_id"`
-	Pessoa   Pessoa `json:"pessoa" gorm:"foreignKey:PessoaID"`
+	ID       primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Numero   string             `bson:"numero" json:"numero" binding:"required"`
+	Tipo     string             `bson:"tipo" json:"tipo" binding:"required"`
+	PessoaID primitive.ObjectID `bson:"pessoa_id" json:"pessoa_id"`
 }
 
 type Contexto struct {
-	ID         uint      `json:"id" gorm:"primaryKey"`
-	Nome       string    `json:"nome" validate:"required"`
-	Descricao  string    `json:"descricao"`
-	DataInicio time.Time `json:"data_inicio"`
-	DataFim    time.Time `json:"data_fim"`
-	Pessoas    []Pessoa  `json:"pessoas" gorm:"many2many:pessoa_contextos;"`
-	Prompts    []Prompt  `json:"prompts" gorm:"foreignKey:ContextoID"`
+	ID         primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Nome       string             `bson:"nome" json:"nome" binding:"required"`
+	Descricao  string             `bson:"descricao" json:"descricao"`
+	DataInicio time.Time          `bson:"data_inicio" json:"data_inicio"`
+	DataFim    time.Time          `bson:"data_fim" json:"data_fim"`
+	Pessoas    []Pessoa           `bson:"pessoas,omitempty" json:"pessoas,omitempty"`
+	Prompts    []Prompt           `bson:"prompts,omitempty" json:"prompts,omitempty"`
 }
 
 type Prompt struct {
-	ID         uint      `json:"id" gorm:"primaryKey"`
-	Conteudo   string    `json:"conteudo" validate:"required"`
-	ContextoID uint      `json:"contexto_id"`
-	Contexto   Contexto  `json:"contexto" gorm:"foreignKey:ContextoID"`
-	CreatedAt  time.Time `json:"created_at"`
-	UpdatedAt  time.Time `json:"updated_at"`
+	ID         primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Conteudo   string             `bson:"conteudo" json:"conteudo" binding:"required"`
+	ContextoID primitive.ObjectID `bson:"contexto_id" json:"contexto_id"`
+	CreatedAt  time.Time          `bson:"created_at" json:"created_at"`
+	UpdatedAt  time.Time          `bson:"updated_at" json:"updated_at"`
 }
 
 type Repository interface {

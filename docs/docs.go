@@ -331,7 +331,7 @@ const docTemplate = `{
                 "summary": "Buscar pessoa",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "ID da pessoa",
                         "name": "id",
                         "in": "path",
@@ -379,7 +379,7 @@ const docTemplate = `{
                 "summary": "Atualizar pessoa",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "ID da pessoa",
                         "name": "id",
                         "in": "path",
@@ -436,7 +436,7 @@ const docTemplate = `{
                 "summary": "Deletar pessoa",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "ID da pessoa",
                         "name": "id",
                         "in": "path",
@@ -906,7 +906,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "nome": {
                     "type": "string"
@@ -945,7 +945,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "nome": {
                     "type": "string"
@@ -970,17 +970,14 @@ const docTemplate = `{
                 "conteudo": {
                     "type": "string"
                 },
-                "contexto": {
-                    "$ref": "#/definitions/domain.Contexto"
-                },
                 "contexto_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "created_at": {
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "updated_at": {
                     "type": "string"
@@ -995,16 +992,13 @@ const docTemplate = `{
             ],
             "properties": {
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "numero": {
                     "type": "string"
                 },
-                "pessoa": {
-                    "$ref": "#/definitions/domain.Pessoa"
-                },
                 "pessoa_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "tipo": {
                     "type": "string"
@@ -1028,7 +1022,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
 	Title:            "Vend API",
-	Description:      "API para gerenciamento de pessoas, telefones e contextos com integração ChatGPT",
+	Description:      "API para gerenciamento de vendas com integração ChatGPT",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

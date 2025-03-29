@@ -9,7 +9,7 @@ definitions:
       descricao:
         type: string
       id:
-        type: integer
+        type: string
       nome:
         type: string
       pessoas:
@@ -34,7 +34,7 @@ definitions:
       email:
         type: string
       id:
-        type: integer
+        type: string
       nome:
         type: string
       telefones:
@@ -51,14 +51,12 @@ definitions:
     properties:
       conteudo:
         type: string
-      contexto:
-        $ref: '#/definitions/domain.Contexto'
       contexto_id:
-        type: integer
+        type: string
       created_at:
         type: string
       id:
-        type: integer
+        type: string
       updated_at:
         type: string
     required:
@@ -67,13 +65,11 @@ definitions:
   domain.Telefone:
     properties:
       id:
-        type: integer
+        type: string
       numero:
         type: string
-      pessoa:
-        $ref: '#/definitions/domain.Pessoa'
       pessoa_id:
-        type: integer
+        type: string
       tipo:
         type: string
     required:
@@ -86,8 +82,7 @@ info:
     email: support@swagger.io
     name: API Support
     url: http://www.swagger.io/support
-  description: API para gerenciamento de pessoas, telefones e contextos com integração
-    ChatGPT
+  description: API para gerenciamento de vendas com integração ChatGPT
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -298,7 +293,7 @@ paths:
         in: path
         name: id
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
@@ -332,7 +327,7 @@ paths:
         in: path
         name: id
         required: true
-        type: integer
+        type: string
       produces:
       - application/json
       responses:
@@ -364,7 +359,7 @@ paths:
         in: path
         name: id
         required: true
-        type: integer
+        type: string
       - description: Dados da pessoa
         in: body
         name: pessoa
